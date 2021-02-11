@@ -1,21 +1,36 @@
-import React from 'react'
+import React, { useContext } from "react";
+import { GlobalContext } from "../context/Globalstate.js";
 
 const IncomeExpenses = () => {
-    return (
-      <div className="inc-exp-container">
-            <div>
-                <h4>Income</h4>
-                <p className="money plus">+0.99</p>
-            </div>
+  const { transactions } = useContext(GlobalContext);
+  const amounts = transactions.map((transaction) => transaction.amount);
 
-            <div>
-            <h4>Expense</h4>
-            <p className="money minus">-0.99</p>             {/* classname is money and extention is plus and minus */}
+  const income = amounts
+    .filter((amount) => amount > 0)
+    .reduce((sum, currentValue) => {
+      return sum + currentValue;
+    }, 0);
 
-        </div>
+  const expense = amounts
+    .filter((amount) => amount < 0)
+    .reduce((sum, currentValue) => {
+      return sum + currentValue;
+    }, 0);
 
-        </div>
-    )
-}
+  return (
+    <div className="inc-exp-container">
+      <div>
+        <h4>Income</h4>
+        <p className="money plus">£{income}</p>
+      </div>
 
-export default IncomeExpenses
+      <div>
+        <h4>Expense</h4>
+        <p className="money minus">£{expense}</p>{" "}
+        {/* classname is money and extention is plus and minus */}
+      </div>
+    </div>
+  );
+};
+
+export default IncomeExpenses;
