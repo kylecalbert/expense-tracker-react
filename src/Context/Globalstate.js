@@ -1,19 +1,42 @@
 import React, { createContext, useReducer } from "react";
-import AppReducer from "./AppReducer.Js";
+import AppReducer from "./AppReducer.js";
 //Initial State
 
 const initialState = {
-  transactions: [
-    { id: 1, text: "Flower", amount: -20 },
-    { id: 2, text: "Salary", amount: 300 },
-    { id: 3, text: "Video Game", amount: -20 },
-    { id: 4, text: "Grocerry", amount: -20 },
-  ],
+  transactions: [],
 };
 
 //create Context
-export const GlobalContext = createContext(initialState);
+export const GlobalContext = createContext(initialState); //so we can access it from other variables
+
+//Provider component
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-  return <GlobalContext.Provider>{children}</GlobalContext.Provider>;
+
+  //action
+  function deleteTransaction(id) {
+    dispatch({ type: "DELETE_TRANSACTION", payload: id }); //setting payload to id
+  }
+
+  //action
+  function deleteTransaction(id) {
+    dispatch({ type: "DELETE_TRANSACTION", payload: id }); //setting payload to id
+  }
+
+  //action
+  function addTransaction(transaction) {
+    dispatch({ type: "ADD_TRANSACTION", payload: transaction }); //setting payload to id
+  }
+
+  return (
+    <GlobalContext.Provider
+      value={{
+        transactions: state.transactions,
+        deleteTransaction,
+        addTransaction,
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
 };

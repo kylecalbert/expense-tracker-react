@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/Globalstate.js";
-import Transaction from "./Transaction";
-function TransactionList() {
+import { Transaction } from "./Transaction";
+const TransactionList = () => {
   const { transactions } = useContext(GlobalContext);
   return (
     <div>
@@ -13,6 +13,6 @@ function TransactionList() {
       </ul>
     </div>
   );
-}
+};
 
 export default TransactionList;
